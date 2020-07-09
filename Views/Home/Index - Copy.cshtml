@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Welcome to T8A Store";
+    Layout = "_Layout";
+}
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome to T8A Store, Login to begin shopping!</h1>
+        <form id="loginForm" action="/Home/Login" method="POST">
+            <table align="center">
+                <tr>
+                    <td>Username:</td>
+                    <td>
+                        <input id="uname" name="username" class="form-control" placeholder="Enter Username" required/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Password:</td>
+                    <td><input id="pwd" name="password" type="password" class="form-control" placeholder="Enter Password" required/></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right">
+                        <input id="loginBtn" type="submit" value="Login" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+    </div>

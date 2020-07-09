@@ -1,0 +1,162 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model Customer;
+
+@{
+    ViewData["Title"] = "Prouduct View2";
+    Layout = "_galleryLayout";
+    string uname = (string)ViewData["username"];
+}
+
+@section Scripts
+{
+    <script>
+        $('#reviewSubmit').on('click', function () {
+              $.alert('Thank you for your review!')});
+
+    </script>
+}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<div style="margin-left:320px;">
+    <p><b style="margin-right: 10px;color:#568ea1;font-size: 20px;" class="nav-link">Welcome to T8A SoftStore's: Product Information</b></p>
+    <form action="/Gallery/Gallery" style="display:inline-block;">
+        <div class="form-group" style="padding-left: 50px;">
+            <table class="table-borderless">
+                <tr>
+                    <td>
+                        <input type="text" class="form-control input-sm" minlength="1" maxlength="64" placeholder="Search for product" name="keyword" value=@(ViewBag.keyword)>
+                    </td>
+                    <td>
+                        <input type="hidden" name="itemCount" value="@ViewBag.ItemCount" />
+                        <input class="btn btn-outline-primary" type="submit" value="Search">
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+    </form>
+</div>
+<br />
+
+
+@{
+    foreach (Product product in @ViewBag.Product)
+    {
+        var str = "/Cart/AddtoCart";
+        <section>
+            <form action=@str class="form-inline">
+                <table class="table-borderless">
+                    <tr style="background-color:white;" class="border-bottom">
+                        <th class="title" colspan="2">
+                            @product.productName
+                        </th>
+                    </tr>
+                    <tr style="background-color:white;border-collapse:collapse;">
+                        <td rowspan="5" style="width:200px;background-color:white;"><img src="@product.Image" width="150" height="150"></td>
+                    </tr>
+                    <tr style="background-color:white;border-collapse:collapse;">
+                        <td style="width: 600px;">
+                            <p>Title: @product.productName</p>
+
+                        </td>
+                    </tr>
+                    <tr style="background-color:white;border-collapse:collapse;">
+                        <td style="width: 600px;">
+                            <p>Price: $@product.unitPrice</p>
+                        </td>
+                    </tr>
+                    <tr style="background-color:white;border-collapse:collapse;">
+                        <td style="width: 600px;">
+                            <p>Description: @product.description</p>
+                        </td>
+                    </tr>
+                    <tr style="background-color:white;border-collapse:collapse;">
+                        <td style="width: 600px;">
+                            <input name="productId" type="hidden" value="@product.Id" />
+                            <input name="fromProdDetail" type="hidden" value="true" />
+                            <input class="button-primary" type="submit" value="Add To Cart">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </section>
+
+
+        <br />
+        <br />
+        <br />
+
+        @Html.Raw("<b>RECOMMENDATIONS OF SIMILAR PRODUCTS:</b>")
+
+        @foreach (Product recommendation in @ViewBag.Recommendation)
+        {
+            <div><a href="/Product/View2?newid=@recommendation.Id"><p class="title">@recommendation.productName</p></a></div>
+            //<div><p class="title">@recommendation.RecommendedProduct2</p></div>
+            //<div><p class="title">@recommendation.RecommendedProduct3</p></div>
+            <p>
+            </p>
+
+        }
+
+
+        @Html.Raw("<b>REVIEWS BY CUSTOMERS:</b>")
+
+        <table style="width:100%">
+            <tr>
+                <th>Review Date</th>
+                <th>Review Comments</th>
+                <th>Stars</th>
+            </tr>
+
+            @foreach (Review review in ViewBag.Review)
+            {
+                <tr>
+                    <th>@review.CreationTime</th>
+                    <th>@review.Comments</th>
+                    <th>@review.Stars</th>
+                </tr>
+            }
+        </table>
+
+        @Html.Raw("<b>Submit your review for this product:</b>")
+
+        <form id="submitreview" action="/Product/SubmitReview" method="POST">
+            <label for="comments">Comments:</label><br>
+            <input type="text" id="comments" name="comments" value="" required><br>
+            <label for="stars">Number of stars (maximum 5)</label><br>
+                                                                  <select id="stars" name="stars">
+                                                                      <option value="0">0 star</option>
+                                                                      <option value="1">1 star</option>
+                                                                      <option value="2">2 stars</option>
+                                                                      <option value="3">3 stars</option>
+                                                                      <option value="4">4 stars</option>
+                                                                      <option value="5">5 stars</option>
+                                                                  </select>
+            <input name="newid" type="hidden" value="@product.Id">
+            <input type="submit" value="Submit" id="reviewSubmit">
+        </form>
+
+    }
+
+}
+
+
+
+

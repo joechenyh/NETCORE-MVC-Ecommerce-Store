@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - NETCORE_CA_8A</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+
+
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color:#568ea1">
+                <img src="~/lib/images/brand.png" width="40" height="40" alt="" style="margin-right: 15px;"><b>T8A SoftStore</b></a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                
+
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+
+                        @{
+                            if (@ViewBag.Username == null || @ViewBag.Username == " ")
+                            {
+
+                            }
+                            else
+                            {
+                                <li class="nav-item" style="width: 150px;">
+                                    <b style="margin-right: 10px;color:#568ea1;" class="nav-link">HELLO @ViewBag.Username </b>
+                                </li>
+                            }
+                        }
+
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:#568ea1" asp-area="" asp-controller="Gallery" asp-action="Gallery"><b>HOME </b> </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:#568ea1" asp-area="" asp-controller="Cart" asp-action="GetPurchasedHistory"><b>PURCHASE HISTORY</b></a>
+                        </li>
+                        @{
+                            if (@ViewBag.Username == null || @ViewBag.Username == " ")
+                            {
+                                <li class="nav-item" style="width: 400px;"> </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item" style="width: 240px;"> </li>
+                            }
+                        }
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"  style="color:#568ea1" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Filter by Category
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/Gallery/Gallery"  style="color:#568ea1">All Products</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/Gallery/Gallery?keyword=net"  style="color:#568ea1">.NET</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/Gallery/Gallery?keyword=ms"  style="color:#568ea1">MS</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/Cart" class="nav-link text-dark">
+                                <img src="/lib/images/bag.png" height="25" width="20" />
+                                @{
+                                    if (@ViewBag.ItemCount != 0)
+                                    {
+                                        <span style="color:#ff0000;font-size: 10px;">@ViewBag.ItemCount</span>
+                                    }
+                                }
+                            </a>
+                        </li>
+
+                        @{
+                            if (@ViewBag.Username == null || @ViewBag.Username == "")
+                            {
+                                <li class="nav-item">
+                                    <a class="btn" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/lib/images/login5.png" height="27" width="30" /></a>
+                                </li>
+
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="btn" asp-area="" asp-controller="Home" asp-action="Logout"><img src="~/lib/images/logout1.png" height="27" width="30" style="margin-top: 3px;" /></a>
+                                </li>
+                            }
+                        }
+
+
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - NETCORE_CA_8A - All right reserved</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+

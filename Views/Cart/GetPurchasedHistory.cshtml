@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "GetPurchasedHistory";
+    Layout = "_galleryLayout";
+}
+
+<b style="margin-right: 10px;color:#568ea1;font-size: 20px;font-style: bold;margin-left:460px;margin-bottom:15px;">My Purchases</b>
+
+@if (@ViewBag.CartItems.Count == 0)
+{
+    <div class="alert alert-info">
+        <strong>You have no previous purchased history!</strong>
+    </div>
+
+}
+
+
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Price Total</th>
+                <th>Checkout Date</th>
+                <th colspan="2">Activation Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int Total = 0;
+            }
+            @foreach (var item in @ViewBag.CartItems)
+            {
+                int lineTotal = Convert.ToInt32(item.Quantity * item.Product.unitPrice);
+                Total = Convert.ToInt32(@Total + lineTotal);
+                <tr>
+                    <td>@item.Product.productName</td>
+                    <td>@item.Product.unitPrice</td>
+                    <td>@item.Quantity</td>
+                    <td>@lineTotal</td>
+                    <td>@item.CheckoutTime</td>
+                    <td>
+                        <select>
+                            @{
+                                foreach (var activationCode in item.ActivationCodes)
+                                {
+                                    <option>@activationCode</option>
+                                }
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <a href="~/lib/resources/sample_exe_File.pdf" class="btn btn-primary" download>
+                            <i class="fa fa-download"></i> Download
+                        </a>
+                    </td>
+
+                </tr>
+                <tr style="text-align:left">
+                    <td colspan="6">
+                        <form action="/Gallery/Gallery">
+                            <input type="hidden" name="itemCount" value="@ViewBag.ItemCount" />
+
+                        </form>
+                    </td>
+                </tr>
+            }
+            <tr style="text-align:left">
+                <td colspan="7">
+                    <form action="/Gallery/Gallery">
+                        <input class="btn btn-outline-primary" type="submit" value="Continue Shopping">
+                    </form>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+}

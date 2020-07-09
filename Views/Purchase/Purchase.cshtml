@@ -1,0 +1,46 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model Purchase;
+
+
+@{
+    ViewData["Title"] = "Purchase History";
+    Layout = "_galleryLayout";
+
+}
+<h1>@ViewData["_galleryLayout"]</h1>
+
+<p>Welcome to T8A SoftStore's Product Gallery : Purchase History</p>
+
+
+
+@{   if  (ViewBag.Purchases == null)
+    { 
+    <p>No purchase history</p>
+}
+
+    else
+    {
+        foreach (var purchase in ViewBag.Purchases)
+        {
+
+<div class="gallery_product col-lg-3 col-md-4 col-xs-6">
+    <div><p class="purchasedate">Purchase Date: @purchase.UTCPurchaseDate</p></div>
+    <div><h4 class="Productname">Product Name: @purchase.Product.productName</h4></div><p></p>
+    <div><p class="Productid">Product ID: @purchase.ProductId</p></div>
+    <div><p class="purchasekey">Activation Key: @purchase.ActivationKey</p></div>
+    <div></div>
+
+    <p>
+    </p>
+
+</div>
+
+
+
+
+            }
+        }
+    }
+
+
+

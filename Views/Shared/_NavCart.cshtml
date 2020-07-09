@@ -1,0 +1,12 @@
+﻿<a id="cartButton" class="nav-link" href="/Cart/Cart">
+    <i class="fa fa-globe">
+        @if (@ViewBag.ItemCount == 0)
+        {
+            <span class="glyphicon glyphicon-shopping-cart" style="color: goldenrod"></span>
+        }
+        else
+        {
+            <span class="glyphicon glyphicon-shopping-cart" style="color: goldenrod">@ViewBag.ItemCount</span>
+        }
+    </i>
+</a>

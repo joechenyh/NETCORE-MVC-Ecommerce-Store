@@ -1,0 +1,78 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model Customer;
+
+@{
+    ViewData["Title"] = "Gallery";
+    Layout = "_galleryLayout";
+    string uname = (string)ViewData["username"];
+}
+
+
+<div style="margin-left:320px;">
+    <p><b style="margin-right: 10px;color:#568ea1;font-size: 20px;" class="nav-link">Welcome to T8A SoftStore's Product Gallery</b></p>
+    <form action="/Gallery/Gallery" style="display:inline-block;">
+        <div class="form-group" style="padding-left: 50px;">
+            <table>
+                <tr>
+                    <td>
+                        <input type="text" class="form-control input-sm" minlength="1" maxlength="64" placeholder="Search for product" name="keyword" value=@(ViewBag.keyword)>
+                    </td>
+                    <td>
+                        <input type="hidden" name="itemCount" value="@ViewBag.ItemCount" />
+                        <input class="btn btn-outline-primary" type="submit" value="Search">
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+    </form>
+</div>
+<br />
+
+
+@{
+    if (@ViewBag.search == "not found")
+    {
+        <div class="alert alert-info">
+            <strong>Sorry! Product is not found...!</strong>
+        </div>
+    }
+
+
+    else
+    {
+
+        {@: @ViewBag.keyword
+
+    }
+
+    <section style="display:block;overflow:hidden;margin-left:5em;">
+        @foreach (Product product in @ViewBag.products)
+        {
+            var str = "/Cart/AddtoCart";
+            <form action=@str>
+                <div class="card" style="height:25em;width: 18rem;float:left;margin: 0.5em;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);text-align: center;font-family: arial;	">
+                    <div class="card-img-top">
+                        <img class="card-img-top" src="@product.Image" alt="Card image cap" height="200">
+                    </div>
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">@product.productName <i style="padding-left: 5px;">$@product.unitPrice</i></h5>
+                        <p class="card-text" style="font-size:13px;">@product.description</p>
+                        @Html.ActionLink("Click to find out more", "View2", "Product", new { newid = @product.Id })
+                    </div>
+                    
+                    <input name="productId" type="hidden" value="@product.Id" />
+                    <input name="searchKeyword" type="hidden" value="@ViewBag.serchKeyword" />
+                    <input class="card-footer btn" type="submit" value="Add To Cart" style="background-color: #568ea1;">
+                   
+                </div>
+            </form>
+
+        }
+    </section>
+}
+}
+
+

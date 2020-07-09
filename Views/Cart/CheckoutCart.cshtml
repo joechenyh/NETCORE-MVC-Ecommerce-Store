@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "CheckoutCart";
+    Layout = "_galleryLayout";
+}
+
+<b style="margin-right: 10px;color:#568ea1;font-size: 20px;font-style: bold;margin-left:360px;margin-bottom:15px;">THANK YOU FOR YOUR PURCHASE</b>
+
+@if (@ViewBag.CartItems.Count == 0)
+{
+    <div class="alert alert-info">
+        <strong>No product added to cart!</strong>
+    </div>
+
+}
+
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Line Total</th>
+                <th>Checkout Time</th>
+                <th colspan="2">Activation Code</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int Total = 0;
+            }
+            @foreach (var item in @ViewBag.CartItems)
+            {
+                int lineTotal = Convert.ToInt32(item.Quantity * item.Product.unitPrice);
+                Total = Convert.ToInt32(@Total + lineTotal);
+                <tr>
+                    <td>@item.Product.productName</td>
+                    <td>@item.Product.unitPrice</td>
+                    <td>@item.Quantity</td>
+                    <td>@lineTotal</td>
+                    <td>@item.CheckoutTime</td>
+                    <td>
+                        <select>
+                            @{
+                                foreach (var activationCode in item.ActivationCodes)
+                                {
+                                    <option>@activationCode</option>
+                                }
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <a href="~/lib/resources/sample_exe_File.pdf" class="btn btn-primary" download>
+                            <i class="fa fa-download"></i> Download
+                        </a>
+                    </td>
+
+                </tr>
+            }
+
+
+        <tr>
+            <td>
+                <form action="/Gallery/Gallery">
+                    <input type="hidden" name="itemCount" value="@ViewBag.ItemCount" />
+                    <input class="btn btn-outline-primary"  type="submit" value="Continue Shopping">
+                </form>
+            </td>
+            <td colspan="6" class="text-right"><b>Total: @Total</b></td>
+        </tr>
+
+        </tbody>
+        
+    </table>
+}
